@@ -264,7 +264,7 @@ TUNERS <span>CUSTOMS</span>
 <a href="#onas">♟ O nás</a>
 <a href="#kontakt">☎ Kontakt</a>
 </nav>
-<button class="discord" onclick="loginInfo()">
+<button id="heroDiscordLogin" class="discord" onclick="loginInfo()">
 🎮 Prihlásiť cez Discord
 </button>
 </div>
@@ -408,9 +408,13 @@ async function zobrazDiscordProfil() {
 
         const user = data.user;
 
-        const tlacidlo = document.querySelector(
-            '[onclick*="loginInfo"]'
-        );
+      const tlacidlo = document.querySelector(
+    '[onclick="loginInfo()"]'
+);
+
+document.querySelectorAll('[onclick="loginInfo()"]').forEach(btn => {
+    if (btn !== tlacidlo) btn.style.display = "none";
+});
 
         if (!tlacidlo) return;
 
