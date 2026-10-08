@@ -7,6 +7,69 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+    /* TUNERS CUSTOMS – MODERNÁ HORNÁ LIŠTA */
+
+header {
+  background: rgba(9, 11, 16, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(237, 16, 29, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+header .nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 17px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+header .brand {
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+header nav a {
+  padding: 11px 16px;
+  border-radius: 10px;
+  color: #d5d8df;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+
+header nav a:hover,
+header nav a:focus-visible {
+  background: rgba(237, 16, 29, 0.14);
+  color: #ff3544;
+}
+
+@media (max-width: 760px) {
+  header .nav {
+    flex-direction: column;
+    padding: 14px;
+  }
+
+  header nav {
+    justify-content: center;
+    gap: 4px;
+  }
+
+  header nav a {
+    padding: 9px 11px;
+  }
+}
 :root {
 --red: #ed101d;
 --dark: #08090b;
