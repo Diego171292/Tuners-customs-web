@@ -394,6 +394,59 @@ aby tvoje vozidlo bolo vždy v top stave.
 function loginInfo() {
     window.location.href = "/auth/discord";
 }
+
+async function zobrazDiscordProfil() {
+    try {
+        const odpoved = await fetch("/api/me", {
+            credentials: "same-origin"
+        });
+
+        if (!odpoved.ok) return;
+
+        const data = await odpoved.json();
+        if (!data.authenticated || !data.user) return;
+
+        const user = data.user;
+
+        const tlacidlo = document.querySelector(
+            '[onclick*="loginInfo"]'
+        );
+
+        if (!tlacidlo) return;
+
+        const profil = document.createElement("div");
+        profil.style.cssText =
+            "display:flex;align-items:center;justify-content:center;" +
+            "gap:12px;flex-wrap:wrap;padding:12px;color:white;";
+
+        const avatar = document.createElement("img");
+        avatar.width = 48;
+        avatar.height = 48;
+        avatar.style.cssText = "border-radius:50%;object-fit:cover;";
+
+        avatar.src = user.avatar
+            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+            : "https://cdn.discordapp.com/embed/avatars/0.png";
+
+        const meno = document.createElement("strong");
+        meno.textContent = user.global_name || user.username;
+
+        const odhlasit = document.createElement("a");
+        odhlasit.href = "/logout";
+        odhlasit.textContent = "Odhlásiť sa";
+        odhlasit.style.cssText =
+            "background:#d0101d;color:white;padding:12px 18px;" +
+            "border-radius:10px;text-decoration:none;font-weight:bold;";
+
+        profil.append(avatar, meno, odhlasit);
+        tlacidlo.replaceWith(profil);
+
+    } catch (chyba) {
+        console.error("Discord profil sa nepodarilo načítať.");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", zobrazDiscordProfil);
 </script>
 
 </body>
