@@ -8,12 +8,16 @@ import requests
 from flask import Flask, jsonify, redirect, request, send_from_directory, session
 
 BASE_DIR = Path(__file__).resolve().parent
-BASE_URL = "https://tuners-customs-web-production.up.railway.app"
 DISCORD_API = "https://discord.com/api/v10"
-REDIRECT_URI = BASE_URL + "/auth/discord/callback"
+DEFAULT_REDIRECT_URI = (
+    "https://tuners-customs-web-production.up.railway.app/auth/discord/callback"
+)
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY") or secrets.token_hex(32)
+secret_key = os.environ.get("FLASK_SECRET_KEY", "").strip()
+if not secret_key:
+    raise RuntimeError("FLASK_SECRET_KEY is missing in Railway Variables")
+app.secret_key = secret_key
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SECURE=True,
@@ -22,10 +26,11 @@ app.config.update(
 )
 
 
-def discord_settings():
+def oauth_config():
     return (
         os.environ.get("DISCORD_CLIENT_ID", "").strip(),
         os.environ.get("DISCORD_CLIENT_SECRET", "").strip(),
+        os.environ.get("DISCORD_REDIRECT_URI", "").strip() or DEFAULT_REDIRECT_URI,
     )
 
 
@@ -34,18 +39,31 @@ def home():
     return send_from_directory(BASE_DIR, "index.html")
 
 
+@app.get("/api/auth-status")
+def auth_status():
+    client_id, client_secret, redirect_uri = oauth_config()
+    return jsonify({
+        "client_id_present": bool(client_id),
+        "client_secret_present": bool(client_secret),
+        "redirect_uri_configured": bool(redirect_uri),
+        "ready": bool(client_id and client_secret),
+    })
+
+
 @app.get("/auth/discord")
 @app.get("/login")
 def discord_login():
-    client_id, client_secret = discord_settings()
-    if not client_id or not client_secret:
-        return "Discord prihlasovanie nie je nakonfigurovane.", 503
+    client_id, client_secret, redirect_uri = oauth_config()
+    if not client_id:
+        return "Discord Client ID chyba v Railway Variables.", 503
+    if not client_secret:
+        return "Discord Client Secret chyba v Railway Variables.", 503
 
     state = secrets.token_urlsafe(32)
     session["oauth_state"] = state
     params = {
         "client_id": client_id,
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": redirect_uri,
         "response_type": "code",
         "scope": "identify",
         "state": state,
@@ -67,9 +85,9 @@ def discord_callback():
     if not code:
         return "Chyba prihlasovaci kod Discordu.", 400
 
-    client_id, client_secret = discord_settings()
+    client_id, client_secret, redirect_uri = oauth_config()
     if not client_id or not client_secret:
-        return "Discord prihlasovanie nie je nakonfigurovane.", 503
+        return "Discord prihlasovacie udaje chybaju v Railway.", 503
 
     try:
         token_response = requests.post(
@@ -79,13 +97,12 @@ def discord_callback():
                 "client_secret": client_secret,
                 "grant_type": "authorization_code",
                 "code": code,
-                "redirect_uri": REDIRECT_URI,
+                "redirect_uri": redirect_uri,
             },
             timeout=15,
         )
         token_response.raise_for_status()
         access_token = token_response.json()["access_token"]
-
         user_response = requests.get(
             DISCORD_API + "/users/@me",
             headers={"Authorization": "Bearer " + access_token},
@@ -126,7 +143,9 @@ def logout():
 
 @app.get("/<path:filename>")
 def static_files(filename):
-    if filename.startswith(".") or "/." in filename or filename.endswith(".py") or filename in {"Dockerfile", "requirements.txt", "runtime.txt", "Procfile"}:
+    blocked = {"Dockerfile", "requirements.txt", "runtime.txt", "Procfile"}
+    if (filename.startswith(".") or "/." in filename or
+            filename.endswith(".py") or filename in blocked):
         return "Not found", 404
     return send_from_directory(BASE_DIR, filename)
 
