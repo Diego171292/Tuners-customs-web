@@ -1,1 +1,400 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tuners Customs | Postal 768</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+--red: #ed101d;
+--dark: #08090b;
+--panel: #111419;
+--line: #292c32;
+--muted: #a5a8b0;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+margin: 0;
+background: var(--dark);
+color: #fff;
+font-family: Inter, Arial, sans-serif;
+}
+a { text-decoration: none; color: inherit; }
+button { font: inherit; cursor: pointer; }
+header {
+background: rgba(7,8,10,.96);
+border-bottom: 1px solid #401016;
+position: sticky;
+top: 0;
+z-index: 10;
+}
+.nav {
+max-width: 1500px;
+margin: auto;
+padding: 12px 25px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+}
+.brand {
+font-family: Rajdhani, sans-serif;
+font-size: 26px;
+font-weight: 700;
+font-style: italic;
+white-space: nowrap;
+}
+.brand span, .red { color: var(--red); }
+.brand small {
+display: block;
+font: 11px Inter, sans-serif;
+letter-spacing: 5px;
+text-align: center;
+color: #ccc;
+}
+nav { display: flex; flex-wrap: wrap; gap: 22px; }
+nav a {
+font-size: 13px;
+color: #ddd;
+transition: .2s;
+}
+nav a:hover { color: var(--red); }
+.discord {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+background: linear-gradient(135deg,#e00011,#790008);
+color: white;
+padding: 15px 23px;
+border: 0;
+border-radius: 6px;
+font-weight: 700;
+box-shadow: 0 0 24px #e0001138;
+}
+.discord:hover { filter: brightness(1.2); }
+.hero {
+position: relative;
+min-height: 460px;
+display: flex;
+align-items: center;
+background:
+linear-gradient(90deg,#050505 0%,#050505e8 30%,#05050560 72%),
+url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800&auto=format&fit=crop') center/cover;
+}
+.hero-content {
+width: min(1500px,100%);
+margin: auto;
+padding: 65px 45px;
+}
+.hero h1 {
+font: italic 800 clamp(46px,7vw,100px)/.9 Rajdhani,sans-serif;
+text-transform: uppercase;
+margin: 0;
+text-shadow: 0 4px 15px #000;
+}
+.hero h2 {
+font: 600 22px Rajdhani,sans-serif;
+letter-spacing: 12px;
+color: #ddd;
+margin: 18px 0;
+}
+.hero p {
+color: #e4e4e4;
+font-size: 15px;
+margin: 25px 0;
+}
+.container {
+max-width: 1500px;
+margin: auto;
+padding: 20px 24px 50px;
+}
+.features {
+display: grid;
+grid-template-columns: repeat(6,1fr);
+gap: 12px;
+}
+.feature, .panel {
+background: linear-gradient(140deg,#15191e,#0b0d10);
+border: 1px solid var(--line);
+border-radius: 9px;
+}
+.feature {
+padding: 19px 13px;
+min-height: 95px;
+}
+.feature .symbol {
+color: var(--red);
+font-size: 26px;
+margin-bottom: 8px;
+}
+.feature strong { display: block; font-size: 13px; }
+.feature small { color: var(--muted); font-size: 11px; }
+.sections {
+display: grid;
+grid-template-columns: 1.3fr 1fr 1fr;
+gap: 16px;
+margin-top: 18px;
+}
+.panel {
+padding: 23px;
+min-height: 290px;
+overflow: hidden;
+}
+.panel h2, .gallery h2 {
+font-size: 22px;
+margin: 0 0 20px;
+}
+.panel h2:before, .gallery h2:before {
+content: "/";
+color: var(--red);
+font-weight: 800;
+margin-right: 10px;
+}
+.panel p {
+color: #c2c4ca;
+font-size: 14px;
+line-height: 1.9;
+}
+.about {
+background:
+linear-gradient(90deg,#101217 0%,#101217f2 55%,#10121770),
+url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1000&auto=format&fit=crop') center/cover;
+}
+.more {
+background: #9f000a;
+border: none;
+color: white;
+padding: 12px 20px;
+border-radius: 5px;
+font-weight: 700;
+margin-top: 12px;
+}
+.service {
+display: flex;
+gap: 12px;
+align-items: center;
+padding: 12px 0;
+border-bottom: 1px solid #24272c;
+}
+.service b {
+color: var(--red);
+font-size: 23px;
+width: 30px;
+}
+.service strong { display: block; font-size: 14px; }
+.service small { color: var(--muted); font-size: 11px; }
+.location-img {
+height: 175px;
+border-radius: 7px;
+background: url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&auto=format&fit=crop') center/cover;
+position: relative;
+}
+.location-img span {
+position: absolute;
+bottom: 12px;
+left: 12px;
+background: #08090be8;
+padding: 12px;
+border-radius: 6px;
+font-weight: 700;
+}
+.gallery { margin-top: 18px; }
+.gallery-grid {
+display: grid;
+grid-template-columns: repeat(6,1fr);
+gap: 12px;
+}
+.gallery-grid img {
+width: 100%;
+height: 125px;
+object-fit: cover;
+border: 1px solid #333;
+border-radius: 8px;
+transition: .2s;
+}
+.gallery-grid img:hover {
+border-color: var(--red);
+transform: scale(1.025);
+}
+footer {
+padding: 25px;
+border-top: 1px solid #292c32;
+text-align: center;
+color: #888;
+font-size: 12px;
+}
+@media(max-width:1100px) {
+.features { grid-template-columns: repeat(3,1fr); }
+.sections { grid-template-columns: 1fr 1fr; }
+.sections .about { grid-column: span 2; }
+.gallery-grid { grid-template-columns: repeat(3,1fr); }
+.nav { flex-wrap: wrap; }
+}
+@media(max-width:650px) {
+.nav { justify-content: center; }
+nav { justify-content: center; gap: 13px; }
+.hero { min-height: 380px; }
+.hero-content { padding: 45px 22px; }
+.hero h2 { letter-spacing: 5px; }
+.features { grid-template-columns: repeat(2,1fr); }
+.sections { grid-template-columns: 1fr; }
+.sections .about { grid-column: auto; }
+.gallery-grid { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
 
+<header>
+<div class="nav">
+<a href="#domov" class="brand">
+TUNERS <span>CUSTOMS</span>
+<small>POSTAL 768</small>
+</a>
+<nav>
+<a href="#domov">🏠 Domov</a>
+<a href="#sluzby">▤ Cenník</a>
+<a href="#zamestnanci">👥 Zamestnanci</a>
+<a href="#dochadzka">◷ Dochádzka</a>
+<a href="#galeria">▣ Galéria</a>
+<a href="#onas">♟ O nás</a>
+<a href="#kontakt">☎ Kontakt</a>
+</nav>
+<button class="discord" onclick="loginInfo()">
+🎮 Prihlásiť cez Discord
+</button>
+</div>
+</header>
+
+<section class="hero" id="domov">
+<div class="hero-content">
+<h1>TUNERS <span class="red">CUSTOMS</span></h1>
+<h2>POSTAL 768</h2>
+<p>Tuning • Opravy • Fixboxy • Odťah • Viac ako len garáž</p>
+<button class="discord" onclick="loginInfo()">
+🎮 Prihlásiť sa cez Discord →
+</button>
+</div>
+</section>
+
+<main class="container">
+
+<section class="features">
+<div class="feature">
+<div class="symbol">🛠</div>
+<strong>Kvalitný tuning</strong>
+<small>Podľa tvojich predstáv</small>
+</div>
+<div class="feature">
+<div class="symbol">⚙</div>
+<strong>Opravy vozidiel</strong>
+<small>Rýchlo a spoľahlivo</small>
+</div>
+<div class="feature">
+<div class="symbol">🔧</div>
+<strong>Fixboxy</strong>
+<small>Profesionálny servis</small>
+</div>
+<div class="feature">
+<div class="symbol">🚗</div>
+<strong>Odťah</strong>
+<small>Do mesta zadarmo</small>
+</div>
+<div class="feature">
+<div class="symbol">👥</div>
+<strong>Skúsený tím</strong>
+<small>Vždy pripravení</small>
+</div>
+<div class="feature">
+<div class="symbol">📍</div>
+<strong>Postal 768</strong>
+<small>Nájdeš nás tu</small>
+</div>
+</section>
+
+<div class="sections">
+
+<section class="panel about" id="onas">
+<h2>O nás</h2>
+<p>
+Tuners Customs je profesionálna tuningová garáž
+na Postale 768. Ponúkame kompletné služby
+od tuningu, opráv, fixboxov až po odťah vozidiel.
+Náš tím skúsených mechanikov sa postará o to,
+aby tvoje vozidlo bolo vždy v top stave.
+</p>
+<a href="#sluzby">
+<button class="more">Viac informácií →</button>
+</a>
+</section>
+
+<section class="panel" id="sluzby">
+<h2>Naše služby</h2>
+<div class="service">
+<b>🛠</b>
+<div><strong>Tuning</strong><small>Vizuálne aj výkonnostné úpravy</small></div>
+</div>
+<div class="service">
+<b>⚙</b>
+<div><strong>Opravy</strong><small>Rýchle a spoľahlivé opravy</small></div>
+</div>
+<div class="service">
+<b>🔧</b>
+<div><strong>Fixboxy</strong><small>Kompletný servis vozidiel</small></div>
+</div>
+<div class="service">
+<b>🚗</b>
+<div><strong>Odťah</strong><small>V meste zadarmo</small></div>
+</div>
+</section>
+
+<section class="panel" id="kontakt">
+<h2>Naša lokalita</h2>
+<div class="location-img">
+<span>📍 Postal 768</span>
+</div>
+<p>Navštív našu garáž a nechaj svoje vozidlo v rukách profesionálov.</p>
+</section>
+
+</div>
+
+<section class="panel gallery" id="galeria">
+<h2>Galéria</h2>
+<div class="gallery-grid">
+<img alt="Športové auto" loading="lazy" src="https://images.unsplash.com/photo-1494905998402-395d579af36f?w=500&auto=format&fit=crop">
+<img alt="Tuning vozidla" loading="lazy" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop">
+<img alt="Športové vozidlo" loading="lazy" src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=500&auto=format&fit=crop">
+<img alt="Garáž" loading="lazy" src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop">
+<img alt="Motor vozidla" loading="lazy" src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?w=500&auto=format&fit=crop">
+<img alt="Auto" loading="lazy" src="https://images.unsplash.com/photo-1493238792000-8113da705763?w=500&auto=format&fit=crop">
+</div>
+</section>
+
+<section class="panel" id="zamestnanci" style="margin-top:18px;min-height:120px">
+<h2>Zamestnanci</h2>
+<p>Informácie o našom tíme budú dostupné po spustení zamestnaneckého systému.</p>
+</section>
+
+<section class="panel" id="dochadzka" style="margin-top:18px;min-height:120px">
+<h2>Dochádzka a účtovníctvo</h2>
+<p>Pripravujeme prepojenie s Discord botom Tuners Customs a správu výplatných pások.</p>
+</section>
+
+</main>
+
+<footer>
+© 2026 TUNERS CUSTOMS • POSTAL 768 • Všetky práva vyhradené
+</footer>
+
+<script>
+function loginInfo() {
+alert("Prihlásenie cez Discord pripravujeme. Zatiaľ nie je aktívne.");
+}
+</script>
+
+</body>
+</html>
