@@ -28,7 +28,14 @@ def discord_settings():
         os.environ.get("DISCORD_CLIENT_SECRET", "").strip(),
     )
 
-
+@app.get("/api/auth-status")
+def auth_status():
+    client_id, client_secret = discord_settings()
+    return jsonify({
+        "client_id_loaded": bool(client_id),
+        "client_secret_loaded": bool(client_secret),
+        "ready": bool(client_id and client_secret)
+    })
 @app.get("/")
 def home():
     return send_from_directory(BASE_DIR, "index.html")
